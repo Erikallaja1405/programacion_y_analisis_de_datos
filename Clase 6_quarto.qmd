@@ -3,7 +3,7 @@ title: "como usar quarto"
 author: "Erika Llaja Zuta"
 format:
   html:
-    toc: true
+   toc: true
     toc-location: left
     number-sections: true
     output-file: index
@@ -153,6 +153,46 @@ model <- remove_outliers(data = fb
               ,plot_diag = T
               )
 model
+```
+
+#comparaciones de medias 
+
+```{r}
+modelo <- lm(formula = lfa ~ bloque + riego + geno +
+               riego*geno , data = fb )
+
+anova(modelo)
+install.packages("agricolae")
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                  , c("geno", "riego")
+                  , group = TRUE)
+
+print(tukey_result)
+
+plot(tukey_result)
+
+str(tukey_result)
+tukey_result
+
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("geno" , "riego")
+           , sep = ":")
+str(grupos)
+```
+
+```{r}
+ggplot(grupos, aes(x = geno, y = lfa, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  labs(x = "Genotipo", y = "LFA", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: LFA por genotipo y riego")
 ```
 
 
