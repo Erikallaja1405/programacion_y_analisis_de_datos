@@ -3,9 +3,10 @@ title: "como usar quarto"
 author: "Erika Llaja Zuta"
 format:
   html:
-   toc: true
+    toc: true
     toc-location: left
     number-sections: true
+    embed-resources: true
     output-file: index
     
 ---
@@ -77,7 +78,7 @@ str(fb)
 ```
 
 
-## Modelo lineal
+## Modelo lineal lfa
 ```{r}
 modelo <- aov(formula = lfa ~  bloque + riego + geno + riego*geno
           , data = fb)
@@ -113,93 +114,184 @@ plot(modelo)
 
 ```{r}
 ggplot(fb, aes(x = geno, y = hi, colour = riego)) +
-  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
-  labs(title = "Boxplot con interacción de niveles de riego y genotipo",
+  geom_boxplot(outlier.colour = "red" , outlier.shape = 16, outlier.size = 2) +
+  labs(title = "boxplot con interacción de niveles de riego y genotipo" , 
        x = "Interacción Riego y Genotipo",
-       y = "Area Folicar (cm^2)")
-  
-theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
-
+       y = "Valor de la variable respuesta") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  #Inclinar etiquetas del eje x
 ```
 
-## Modelo lineal mixto 
+## Modelo lineal hi
 
 
 ```{r}
-library(lme4)
+modelo <- aov(formula = hi ~  bloque + riego + geno + riego*geno
+          , data = fb)
 
-model <- lme4::lmer(hi ~ riego+ geno + riego*geno + (1|bloque), data = fb)
-anova(model)
-
-plot(model)
-
-```
-
-##Modelos lineales lfa
-
-```{r}
-library(lme4)
-modelo <- lme4::lmer(formula = lfa ~ riego + geno + riego*geno + (1|bloque)
-              ,data = fb)
 anova(modelo)
+
 plot(modelo)
 
-ol <- boxplot(lfa~riego*geno, fb)
+```
+
+## Modelos lineale mixto lfa
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(lfa ~ riego + geno + riego*geno + (1|bloque), data = fb)
+
+anova(model)
+
+plot(modelo)
+
+
+ol <- boxplot(lfa ~ riego*geno, fb)
 ol
+```
+
+```{r}
 library(inti)
+
 model <- remove_outliers(data = fb
-                         ,formula = lfa ~ riego + geno + riego*geno + (1|bloque)
-              ,plot_diag = T
-              )
+                         , formula = lfa ~ riego + geno + riego*geno + (1|bloque)
+                         , plot_diag = T
+                         )
+
 model
 ```
 
-#comparaciones de medias 
+
+#Agricolae: comparaciones de medias 
 
 ```{r}
-modelo <- lm(formula = lfa ~ bloque + riego + geno +
-               riego*geno , data = fb )
+modelo <- lm(formula = lfa ~  bloque + riego + geno + riego*geno
+          , data = fb)
 
 anova(modelo)
-install.packages("agricolae")
+
 library(agricolae)
 
 tukey_result <- HSD.test(modelo
-                  , c("geno", "riego")
-                  , group = TRUE)
-
-print(tukey_result)
+                         , c("geno", "riego")
+                         , group = TRUE)
+tukey_result
 
 plot(tukey_result)
 
 str(tukey_result)
-tukey_result
 
+tukey_result
 
 library(tidyverse)
 
 grupos <- tukey_result$groups %>% 
   rownames_to_column("tratamientos") %>% 
-  separate(tratamientos, into = c("geno" , "riego")
+  separate(tratamientos, into = c("geno", "riego")
            , sep = ":")
+
 str(grupos)
 ```
 
 ```{r}
 ggplot(grupos, aes(x = geno, y = lfa, fill = riego)) +
   geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = lfa + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
   labs(x = "Genotipo", y = "LFA", fill = "Riego") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ggtitle("Gráfico de barras: LFA por genotipo y riego")
 ```
 
+#emsignificancia: comparaciones de medios 
+```{r}
+modelo <- lme4::lmer(hi ~ (1|bloque) + geno*riego
+                     , data = fb)
+
+anova(modelo)
+
+cm1 <- emmeans(modelo, ~ geno | riego) %>% 
+  cld(Letters = letters, reversed = T)
+
+cm1
+
+cm2 <- emmeans(modelo, ~ riego | geno) %>% 
+  cld(Letters = letters, reversed = T)
+cm2
+
+cm3 <- emmeans(modelo, ~ riego * geno) %>% 
+  cld(Letters = letters, reversed = T)
+cm3
+```
+
+#Gráfico
+
+```{r}
+dtcm <- as.data.frame(cm2) %>% 
+  rename(sig = ".group")
+
+ggplot(dtcm, aes(x = geno, y = emmean, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = sig, y = emmean*1.05),
+            position = position_dodge(width = 0.9),
+            vjust = 0) +
+  labs(x = "Genotipo", y = "HI", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: HI por genotipo y riego")
+```
+
+#Análisis multivariado
+
+```{r}
+str(fb)
+view(fb)
+```
+
+##Correlación
+```{r}
+library(psych)
+
+fb %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(!c("block")) %>% 
+  pairs.panels(x = .
+               , hist.col="red"
+               , pch = 21
+               , stars = TRUE
+               , scale = FALSE
+               , lm = TRUE
+               ) 
+```
+
+###PCA: Análisis de componentes principales
+
+```{r}
+library(FactoMineR)
+
+mv <- fb %>% 
+  group_by(riego, geno) %>% 
+  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
+  PCA(scale.unit = T, quali.sup = c(1:4), graph = F)
 
 
+p1 <- plot(mv
+     , choix="ind"
+     , habillage=1
+     , label = "ind"
+     )
 
 
+p2 <- plot(mv
+     , choix="var")
 
+list(p1, p2) %>% 
+  plot_grid(plotlist = ., nrow = 1)
+```
 
 
 
