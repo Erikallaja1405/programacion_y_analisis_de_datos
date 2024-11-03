@@ -1,6 +1,6 @@
 ---
-title: "Trabajo  de Unidad "
-author: "Erika Llaja Zuta"
+title: "ANÁLISIS DE PRODUCTIVIDAD DE CULTIVO DE FREJOL BAJO CONDICIONES DE UN SISTEMA AGROVOLTAICO"
+author: "Férnandez Poquioma Deyli, Llaja Zuta Erika, Pizarro Zavaleta Nixon Yonel, Ramirez Reap Neider"
 format:
   html:
     toc: true
@@ -40,13 +40,13 @@ La asignación y gestión de tierras agrícolas es una preocupación emergente d
 
 La investigación se ejecutó en el Campus de la Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas, ubicado en el distrito de Chachapoyas, provincia de Chachapoyas, región Amazonas; en las coordenadas 6°13′59″S 77°51′11″O. Tiene una precipitación pluvial abundante y cuenta con una temperatura que oscila entre 10 °C y 21 °C.
 
-![Ubicación de la unidad de estudio](TRABAJO 2U_GU_files/imagen.jpeg)
+![Ubicación de la unidad de estudio](IMAGEN TESIS/imagen 1.jpeg)
 
 ## Unidad de estudio
 
 La unidad de estudio en la investigación se basó en dos sistemas agrovoltaicos (sistema fotovoltaico monofacial y bifacial) y una parcela de control sin sombra, en ambos se instaló dos variedades de frejol (panamito y chaucha). Los sistemas fotovoltaicos constaron de diez módulos solares orientado en la dirección Norte – Sur, con ángulo de inclinación de 15° Sur para optimizar el rendimiento; estos módulos se ubicaron sobre una estructura metálica de 2.90 m de altura, además, de un conjunto de componentes eléctricos y electrónicos para el almacenamiento y consumo de la energía generada. En la superficie cubierta por los módulos solares se instalaron las parcelas de frejol
 
-![Módulo fotovoltaico y cultivo de frejol](TRABAJO 2U_GU_files/imagen 2.jpeg   )
+![Módulo fotovoltaico y cultivo de frejol](IMAGEN TESIS/imagen 2.jpeg)
 
 ## Métodología
 
@@ -80,7 +80,8 @@ kable(tabla, "html", col.names = c("Factores", "")) %>%
   row_spec(0, bold = TRUE, align = "center") # Poner el encabezado en negrita
 ```
 
-##Importación de datos
+# RESULTADOS
+Importación de datos
 
 ```{r}
 source('https://inkaverse.com/setup.r')
@@ -97,16 +98,62 @@ str(Db)
 
 ```
 
-## Modelo lineal de Altura de planta:
+## Dias de germinación
+### Modelo lineal de días de germinación 
+Anva para Days_to_germination_number
 
 ```{r}
-modelo <- aov(formula = Plant_height_91_days_cm ~ Blocks + variedad + distanciamiento + variedad*distanciamiento
+modelo <- aov(formula = Days_to_germination_number ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento
           , data = Db)
 
 anova(modelo)
 
+```
+Diagnostico de los modelos (Prueba de normalidad)
+
+```{r}
 plot(modelo)
 ```
+
+Boxplot 
+```{r}
+library(ggplot2)
+
+# Generar el boxplot con los factores especificados
+ggplot(Db, aes(x = variedad, y = Days_to_germination_number, fill = sistemas)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
+  facet_wrap(~distanciamiento) +
+  labs(title = "Boxplot de Days_to_germination_number por Sistemas, Variedad y Distanciamiento",
+       x = "Variedad",
+       y = "Days to Germination Number",
+       fill = "Sistemas") +
+  theme_minimal()
+
+```
+
+### Modelo lineal mixto Days_to_germination_number
+```{r}
+library(lme4)
+library(lme4)
+model <- lme4::lmer(Days_to_germination_number ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento + (1 | Blocks), data = Db)
+anova(model)
+```
+
+Eliminación de los valores fuera de serie (no tienen distribución normal)
+```{r}
+library(inti)
+model <- remove_outliers(data = Db
+                         , formula = Days_to_germination_number ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento + (1 | Blocks)
+                         , plot_diag = T)
+model
+```
+
+
+
+
+
+
+
 
 ## Modelo lineal de Days_to_germination_number:
 
