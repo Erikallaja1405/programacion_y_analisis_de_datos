@@ -1,0 +1,350 @@
+---
+title: "Trabajo  de Unidad "
+author: "Erika Llaja Zuta"
+format:
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    output-file: index
+    
+---
+
+# RESUMEN
+
+La producción de alimentos y energía simultáneamente es uno de los desafíos que se enfrenta en la actualidad, uno de los mecanismos que optimiza el suelo es la agrovoltaica. Por ello, la investigación se centró en evaluar la productividad de dos variedades de frejol (panamito y chaucha) bajo sistemas agrovoltaicos (bifacial y monofacial). Para ello se instalaron los sistemas agrovoltaicos a una altura de 2.91 m sobre una superficie de 20 m2, en donde se distribuyó parcelas de 1 m2, dos variedades de frejol y dos distanciamientos de siembra (25 y 35cm) por lo que se tuvo un total de 12 tratamientos y se evaluaron características morfológicas como días a la emergencia, altura de planta, número de hojas trifoliadas, número de flores, número de vainas, peso de vainas, peso de granos y rendimiento. Los resultados obtenidos demuestran que los sistemas agrovoltaicos propician condiciones para el cultivo de frejol debido a que, la variedad chaucha presentó una productividad de 700.5kg/ha, además de buenas características morfológicas como altura de planta, número de flores, número de hojas trifoliadas, número de vainas, longitud de vainas, peso de las vainas, peso de los granos y rendimiento, asimismo, la variedad panamito presentó una productividad de 618.9 kg/ha en el mismo sistema. En comparación con el sistema convencional que registró 387 kg/ha. Entonces, los sistemas agrovoltaicos es una opción viable para la producción de frejol, porque se logra optimizar el uso del suelo de forma sostenible. Palabras clave: Productividad, suelo, altura de planta, panel solar, monofacial y bifacial.
+
+# INTRODUCCIÓN
+
+La asignación y gestión de tierras agrícolas es una preocupación emergente debido a la escasez de suelo, lo que también se asocia con la disminución del suministro de energía y agua, así como la creciente demanda de alimentos a nivel mundial (Nie et al., 2018). En ese sentido, el impulso de las energías renovables es una tendencia a nivel global, dentro de ellas destaca la energía solar fotovoltaica, la cual requiere de terrenos para su instalación. Por lo tanto, la competencia por la tierra puede surgir en el futuro para uso agrícola y generación de electricidad basada en energía fotovoltaica (Santra, 2018). La energía solar fotovoltaica (PV) ha crecido rápidamente a lo largo de los años, lo que ha llevado a una competencia territorial entre la instalación de sistemas fotovoltaicos para generar energía y la utilización de tierras para la agricultura para satisfacer la creciente demanda de consumo de la población humana (Reeza et al., 2024) Frente a esta problemática aparecen los sistemas agrovoltaicos como alternativa para producir de manera simultánea, en un mismo terreno, energía y alimentos. Según, Elkadeem et al. (2024), los sistemas agrovoltaicos representan una solución inteligente que combina la producción de electricidad a partir de tecnología solar fotovoltaica con la producción agrícola evitando conflictos de uso del suelo. La agrovoltaica permite el uso dual de la tierra tanto para la agricultura como para la generación de energía fotovoltaica, lo que aumenta considerablemente la eficiencia del uso de la tierra, lo que permite una expansión de la capacidad fotovoltaica en tierras de cultivo mientras se mantienen las actividades agrícolas (Trommsdorff et al., 2022)
+
+# MATERIALES Y MÉTODOS
+
+## Ubicación de la unidad de estudio
+
+La investigación se ejecutó en el Campus de la Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas, ubicado en el distrito de Chachapoyas, provincia de Chachapoyas, región Amazonas; en las coordenadas 6°13′59″S 77°51′11″O. Tiene una precipitación pluvial abundante y cuenta con una temperatura que oscila entre 10 °C y 21 °C.
+
+![Ubicación de la unidad de estudio](TRABAJO 2U_GU_files/imagen.jpeg)
+
+## Unidad de estudio
+
+La unidad de estudio en la investigación se basó en dos sistemas agrovoltaicos (sistema fotovoltaico monofacial y bifacial) y una parcela de control sin sombra, en ambos se instaló dos variedades de frejol (panamito y chaucha). Los sistemas fotovoltaicos constaron de diez módulos solares orientado en la dirección Norte – Sur, con ángulo de inclinación de 15° Sur para optimizar el rendimiento; estos módulos se ubicaron sobre una estructura metálica de 2.90 m de altura, además, de un conjunto de componentes eléctricos y electrónicos para el almacenamiento y consumo de la energía generada. En la superficie cubierta por los módulos solares se instalaron las parcelas de frejol
+
+![Módulo fotovoltaico y cultivo de frejol](TRABAJO 2U_GU_files/imagen 2.jpeg   )
+
+## Métodología
+
+### Diseño experimental
+
+Se empleó un diseño de bloques completamente al azar (DBCA) con un arreglo factorial 2x2x3, siendo el factor A las 2 variedades de frejol (panamito y chaucha), el factor B los dos distanciamientos de siembra (25 cm y 35 cm) y el factor C los tipos de sistema (Control, monofacial y bifacial), en la tabla 1 se muestra la distribución de los factores evaluados y la tabla 2 muestra la descripción de tratamientos evaluados. En la combinación de estos factores se obtuvo 12 tratamientos con 3 bloques (repeticiones), haciendo un total de 48 unidades experimentales (Figura 3). En cada unidad experimental se evaluaron 4 plantas de frejol, teniendo en cuenta el efecto borde se evaluaron un total de 144 plantas de las dos variedades en toda la investigación.
+
+Distribución de los factores evaluados
+
+```{r}
+
+library(knitr)
+library(kableExtra)
+
+# Crear la tabla en un data frame
+tabla <- data.frame(
+  Factor = c("Factor A", "", "Factor B", "", "Factor C"),
+  Factores = c(
+    "Frejol panamito (V1)", 
+    "Frejol chaucha (V2)", 
+    "Distanciamiento de siembra 25 cm (D1)", 
+    "Distanciamiento de siembra 35 cm (D2)", 
+    "Control, Monofacial y Bifacial"
+  )
+)
+
+# Crear la tabla con encabezado y estilo
+kable(tabla, "html", col.names = c("Factores", "")) %>%
+  kable_styling("striped", full_width = F) %>%
+  add_header_above(c(" " = 1, "Factores" = 1)) %>%
+  row_spec(0, bold = TRUE, align = "center") # Poner el encabezado en negrita
+```
+
+##Importación de datos
+
+```{r}
+source('https://inkaverse.com/setup.r')
+url <- "https://docs.google.com/spreadsheets/d/1G21HN7wSDnGFAx55v9ibW8RWnu5gBJThT_2sBiQ748Y/edit?pli=1&gid=61040054#gid=61040054"
+
+gs <- url %>% 
+  as_sheets_id()
+
+Db <- gs %>% 
+  range_read("Db")
+
+
+str(Db)
+
+```
+
+## Modelo lineal de Altura de planta:
+
+```{r}
+modelo <- aov(formula = Plant_height_91_days_cm ~ Blocks + variedad + distanciamiento + variedad*distanciamiento
+          , data = Db)
+
+anova(modelo)
+
+plot(modelo)
+```
+
+## Modelo lineal de Days_to_germination_number:
+
+```{r}
+modelo2 <- aov(formula = Days_to_germination_number ~ Blocks + variedad + distanciamiento + variedad*distanciamiento
+          , data = Db)
+
+anova(modelo2)
+
+plot(modelo2)
+```
+
+##Gráfico de cajas Plant_height_91_days_cm:
+##Gráfico de cajas Plant_height_91_days_cm:
+
+```{r}
+library(ggplot2)
+
+ggplot(Db, aes(x = variedad, y = Plant_height_91_days_cm, colour = distanciamiento)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 10, outlier.size = 1) +
+  labs(title = "Boxplot con interacción de variedad y distanciamiento",
+       x = "Interacción variedad y distanciamiento",
+       y = "Altura de planta (cm)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
+
+```
+
+
+## Gráfico de cajas Days_to_germination_number:
+
+```{r}
+ggplot(Db, aes(x = variedad, y = Days_to_germination_number, colour = distanciamiento)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
+  labs(title = "Boxplot con interacción de variedad y distanciamito",
+       x = "Interacción variedad y distanciamiento",
+       y = "Altura de planta (cm)")
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
+
+```
+
+## Modelo lineal mixto Plant_height_91_days_cm:
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(Plant_height_91_days_cm ~ sistemas + distanciamiento + sistemas*distanciamiento + (1|Blocks), data = Db)
+
+anova(model)
+
+plot(model)
+
+
+ol <- boxplot(Plant_height_91_days_cm ~ sistemas*distanciamiento, Db)
+ol
+
+```
+
+## Modelo lineal mixto dias de germinación:
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(Days_to_germination_number ~ sistemas + distanciamiento + sistemas*distanciamiento + (1|Blocks), data = Db)
+
+anova(model)
+
+plot(model)
+
+
+ol <- boxplot(Days_to_germination_number ~ sistemas*distanciamiento, Db)
+ol
+```
+
+```{r}
+library(inti)
+
+model <- remove_outliers(data = Db
+                         , formula = Days_to_germination_number ~ sistemas + distanciamiento + sistemas*distanciamiento + (1|Blocks)
+                         , plot_diag = T
+                         )
+
+model
+```
+
+```{r}
+summary(Db$Days_to_germination_number)
+```
+
+```{r}
+hist(Db$Days_to_germination_number)
+```
+
+## Comparaciones de medias
+
+```{r}
+modelo <- lm(formula = Days_to_germination_number ~ Blocks + variedad + distanciamiento + variedad*distanciamiento
+          , data = Db)
+
+anova(modelo)
+
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("variedad", "distanciamiento")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("variedad", "distanciamiento")
+           , sep = ":")
+
+str(grupos)
+```
+
+```{r}
+ggplot(grupos, aes(x = variedad, y = Days_to_germination_number, fill = distanciamiento)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = Days_to_germination_number + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
+  labs(x = "varieda", y = "Days_to_germination_number", fill = "distanciamiento") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: Dias de germinación por variedad y distanciamiento")
+```
+
+```{r}
+modelo <- lm(formula = Days_to_germination_number ~ Blocks + variedad + distanciamiento + sistemas +  variedad*distanciamiento*sistemas
+          , data = Db)
+
+anova(modelo)
+
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("variedad", "distanciamiento")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("variedad", "distanciamiento")
+           , sep = ":")
+
+str(grupos)
+```
+
+## significancia: comparaciones de medias
+
+```{r}
+modelo <- lme4::lmer(Days_to_germination_number ~ (1|Blocks) + variedad*distanciamiento
+                     , data = Db)
+
+anova(modelo)
+
+cm1 <- emmeans(modelo, ~ variedad | distanciamiento) %>% 
+  cld(Letters = letters, reversed = T)
+
+cm1
+
+cm2 <- emmeans(modelo, ~ distanciamiento | variedad) %>% 
+  cld(Letters = letters, reversed = T)
+cm2
+
+cm3 <- emmeans(modelo, ~ variedad * distanciamiento) %>% 
+  cld(Letters = letters, reversed = T)
+cm3
+```
+
+##Gráficos
+
+```{r}
+dtcm <- as.data.frame(cm2) %>% 
+  rename(sig = ".group")
+
+ggplot(dtcm, aes(x = variedad, y = emmean, fill = variedad)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = sig, y = emmean*1.05),
+            position = position_dodge(width = 0.9),
+            vjust = 0) +
+  labs(x = "Variedad", y = "Altura de planta", fill = "Variedades") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras:  Altura de planta por variedad y distanciamiento")
+```
+
+```{r}
+str(Db)
+dim(Db)
+a <- Db[ ,c(7:22)]
+View(a)
+```
+
+##Correlación
+
+```{r}
+library(psych)
+
+Db %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(!c("Repetitions")) %>% 
+  pairs.panels(x = . 
+               , hist.col="red"
+               , pch = 21
+               , stars = TRUE
+               , scale = FALSE
+               , lm = TRUE
+               ) 
+```
+
+## PCA: Análisis de componentes principales
+
+```{r}
+library(FactoMineR)
+
+mv <- Db %>% 
+  group_by(variedad, distanciamiento) %>% 
+  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
+  PCA(scale.unit = T, quali.sup = c(1:7), graph = F)
+
+
+p1 <- plot(mv
+     , choix="ind"
+     , habillage=1
+     , label = "ind"
+     )
+
+
+p2 <- plot(mv
+     , choix="var")
+
+list(p1, p2) %>% 
+  plot_grid(plotlist = ., nrow = 1)
+```
+
