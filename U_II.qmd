@@ -10,6 +10,21 @@ format:
     output-file: index
     
 ---
+```{r}
+
+R.version.string
+
+cat("Project: ", getwd())
+
+
+
+
+library(sessioninfo)
+
+session_info()
+
+```
+
 
 # RESUMEN
 
