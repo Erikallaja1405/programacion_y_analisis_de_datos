@@ -46,32 +46,45 @@ La investigación se ejecutó en el Campus de la Universidad Nacional Toribio Ro
 
 La unidad de estudio en la investigación se basó en dos sistemas agrovoltaicos (sistema fotovoltaico monofacial y bifacial) y una parcela de control sin sombra, en ambos se instaló dos variedades de frejol (panamito y chaucha). Los sistemas fotovoltaicos constaron de diez módulos solares orientado en la dirección Norte – Sur, con ángulo de inclinación de 15° Sur para optimizar el rendimiento; estos módulos se ubicaron sobre una estructura metálica de 2.90 m de altura, además, de un conjunto de componentes eléctricos y electrónicos para el almacenamiento y consumo de la energía generada. En la superficie cubierta por los módulos solares se instalaron las parcelas de frejol
 
+
 ![Módulo fotovoltaico y cultivo de frejol](IMAGEN TESIS/imagen 2.jpeg)
+
 
 ## Métodología
 ### Manejo del experimento
 Instalación de la estructura de soporte para los paneles
+
 ![Estructura de soporte de los paneles](IMAGEN TESIS/7.jpeg)
 
 
 Instalación de los paneles fotovoltaicos
+
 ![Sistema fotovoltaico monofacial. B. Bifacial.](IMAGEN TESIS/6.jpeg)
 
+
 Preparación del suelo para el cultivo
+
 ![Preparación de suelo.](IMAGEN TESIS/5.jpeg)
 
+
 Selección de las semillas 
+
 ![P. Semillas de frejol Panamito (A) Chaucha (B)](IMAGEN TESIS/4.jpeg)
 
+
 Prueba de germinación de las semillas 
+
 ![semillas](IMAGEN TESIS/3.jpeg)
 
+
 Análisis de suelo de las parcelas experimentales
+
 ![Suelo](IMAGEN TESIS/2.jpeg)
 
-Siembra de las semillas de frejol en sistemas agrovoltaicos
-![Suelo](IMAGEN TESIS/1.jpeg)
 
+Siembra de las semillas de frejol en sistemas agrovoltaicos
+
+![Suelo](IMAGEN TESIS/1.jpeg)
 
 
 ### Diseño experimental
@@ -280,6 +293,8 @@ model <- lme4::lmer(Yield_kg_ha ~ Blocks + sistemas + variedad + distanciamiento
 anova(model)
 ```
 
+Este análisis de varianza del modelo lineal mixto evalúa la influencia de varios factores y sus interacciones en una variable respuesta. Los factores incluyen sistemas (diferentes métodos o tipos de cultivo), variedad (tipo de planta) y distanciamiento (espaciado entre plantas). Los bloques representan un efecto aleatorio, usado para controlar la variabilidad en diferentes bloques de observación.El factor sistemas tiene el valor F más alto (26.6623), lo que indica que su influencia en la variable respuesta es significativa y considerablemente mayor que la de otros factores. Los otros factores, como variedad , distanciamiento y sus interacciones, tienen valores F bajos, lo que sugiere que no afecta significativamente la variable de respuesta.
+
 Eliminación de los valores fuera de serie (outliers) con Boxplot
 
 ```{r}
@@ -415,7 +430,7 @@ Los resultados más destacados correspondientes al rendimiento, muestran que la 
 
 La productividad del cultivo de frejol bajo sistemas agrovoltaicos (bifacial y monofacial) en comparación con un sistema de siembra convencional fue mayor debido a que los sistemas agrovoltaicos propician el crecimiento de la planta (altura), por lo que se presentan mayor cantidad de flores y, por ende, mayor número vainas. 
 
-Los sistemas agrovoltaicos propician condiciones para el cultivo de frejol ya que, la variedad chaucha presentó una productividad por hectárea de 706.9 kg/ha, por ende, tuvo mayores características morfológicas en altura de planta, mayor número de flores, hojas trifoliadas, mayor número de vainas, longitud de vainas, peso de la vainas peso de los granos y rendimiento, en comparación con la variedad panamito la cual presentó una productividad de 618.9 kg/ha mientras que en el sistema convencional se registró 387 kg/ha. 
+
 
 
 
