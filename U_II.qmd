@@ -116,6 +116,7 @@ plot(modelo)
 ```
 
 Boxplot 
+
 ```{r}
 library(ggplot2)
 
@@ -132,6 +133,7 @@ ggplot(Db, aes(x = variedad, y = Days_to_germination_number, fill = sistemas)) +
 ```
 
 ### Modelo lineal mixto Days_to_germination_number
+
 ```{r}
 library(lme4)
 library(lme4)
@@ -139,7 +141,18 @@ model <- lme4::lmer(Days_to_germination_number ~ Blocks + sistemas + variedad + 
 anova(model)
 ```
 
-Eliminación de los valores fuera de serie (no tienen distribución normal)
+Eliminación de los valores fuera de serie (outliers) con Boxplot
+
+```{r}
+
+ol <- boxplot(Days_to_germination_number ~ sistemas*variedad*distanciamiento, Db) 
+
+ol
+
+```
+
+Eliminación de los valores fuera de serie (outliers) con el pauquete inti
+
 ```{r}
 library(inti)
 model <- remove_outliers(data = Db
@@ -148,120 +161,114 @@ model <- remove_outliers(data = Db
 model
 ```
 
-
-
-
-
-
-
-
-## Modelo lineal de Days_to_germination_number:
+### Comparaciones de medias
 
 ```{r}
-modelo2 <- aov(formula = Days_to_germination_number ~ Blocks + variedad + distanciamiento + variedad*distanciamiento
+modelo <- lm(formula = Days_to_germination_number ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento
           , data = Db)
+anova(modelo)
+library(agricolae)
 
-anova(modelo2)
+tukey_result <- HSD.test(modelo
+                         , c("sistemas", "variedad", "distanciamiento")
+                         , group = TRUE)
+tukey_result
 
-plot(modelo2)
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("sistemas", "variedad", "distanciamiento", sep = ":"))
+
+str(grupos)
+
 ```
 
-##Gráfico de cajas Plant_height_91_days_cm:
-##Gráfico de cajas Plant_height_91_days_cm:
+Grafica de barras
+
+```{r}
+ggplot(grupos, aes(x = sistemas, y = Days_to_germination_number, fill = interaction(variedad, distanciamiento))) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge", color = "black") +  # Usar la media para las barras
+  labs(x = "Sistemas", y = "Días hasta la Germinación", fill = "Variedad y Distanciamiento") +  # Etiquetas
+  theme_minimal() +  # Un tema limpio
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+ ggtitle("Gráfico de barras: Días hasta la germinación por sistemas, variedad y distanciamiento")
+```
+
+## Rendimiento (Kg/ha)
+### Modelo lineal de Rendimiento (Kg/ha)
+Anva para Yield_kg_ha
+
+```{r}
+modelo <- aov(formula = Yield_kg_ha ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento
+          , data = Db)
+
+anova(modelo)
+
+```
+Diagnostico de los modelos (Prueba de normalidad)
+
+```{r}
+plot(modelo)
+```
+Boxplot 
 
 ```{r}
 library(ggplot2)
 
-ggplot(Db, aes(x = variedad, y = Plant_height_91_days_cm, colour = distanciamiento)) +
-  geom_boxplot(outlier.colour = "red", outlier.shape = 10, outlier.size = 1) +
-  labs(title = "Boxplot con interacción de variedad y distanciamiento",
-       x = "Interacción variedad y distanciamiento",
-       y = "Altura de planta (cm)") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
-
-```
-
-
-## Gráfico de cajas Days_to_germination_number:
-
-```{r}
-ggplot(Db, aes(x = variedad, y = Days_to_germination_number, colour = distanciamiento)) +
+# Generar el boxplot con los factores especificados
+ggplot(Db, aes(x = variedad, y = Yield_kg_ha, fill = sistemas)) +
   geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
-  labs(title = "Boxplot con interacción de variedad y distanciamito",
-       x = "Interacción variedad y distanciamiento",
-       y = "Altura de planta (cm)")
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
+  facet_wrap(~distanciamiento) +
+  labs(title = "Boxplot de Days_to_germination_number por Sistemas, Variedad y Distanciamiento",
+       x = "Variedad",
+       y = "Days to Germination Number",
+       fill = "Sistemas") +
+  theme_minimal()
 
 ```
-
-## Modelo lineal mixto Plant_height_91_days_cm:
+### Modelo lineal mixto de Yield_kg_ha
 
 ```{r}
 library(lme4)
-library(lmerTest)
-
-model <- lme4::lmer(Plant_height_91_days_cm ~ sistemas + distanciamiento + sistemas*distanciamiento + (1|Blocks), data = Db)
-
+library(lme4)
+model <- lme4::lmer(Yield_kg_ha ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento + (1 | Blocks), data = Db)
 anova(model)
+```
 
-plot(model)
+Eliminación de los valores fuera de serie (outliers) con Boxplot
 
+```{r}
 
-ol <- boxplot(Plant_height_91_days_cm ~ sistemas*distanciamiento, Db)
+ol <- boxplot(Yield_kg_ha ~ sistemas*variedad*distanciamiento, Db) 
+
 ol
 
 ```
 
-## Modelo lineal mixto dias de germinación:
-
-```{r}
-library(lme4)
-library(lmerTest)
-
-model <- lme4::lmer(Days_to_germination_number ~ sistemas + distanciamiento + sistemas*distanciamiento + (1|Blocks), data = Db)
-
-anova(model)
-
-plot(model)
-
-
-ol <- boxplot(Days_to_germination_number ~ sistemas*distanciamiento, Db)
-ol
-```
+Eliminación de los valores fuera de serie (outliers) con el pauquete inti
 
 ```{r}
 library(inti)
-
 model <- remove_outliers(data = Db
-                         , formula = Days_to_germination_number ~ sistemas + distanciamiento + sistemas*distanciamiento + (1|Blocks)
-                         , plot_diag = T
-                         )
-
+                         , formula = Yield_kg_ha ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento + (1 | Blocks)
+                         , plot_diag = T)
 model
 ```
 
-```{r}
-summary(Db$Days_to_germination_number)
-```
+### Comparaciones de medias
 
 ```{r}
-hist(Db$Days_to_germination_number)
-```
-
-## Comparaciones de medias
-
-```{r}
-modelo <- lm(formula = Days_to_germination_number ~ Blocks + variedad + distanciamiento + variedad*distanciamiento
+modelo <- lm(formula = Yield_kg_ha ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento
           , data = Db)
-
 anova(modelo)
-
 library(agricolae)
 
 tukey_result <- HSD.test(modelo
-                         , c("variedad", "distanciamiento")
+                         , c("sistemas", "variedad", "distanciamiento")
                          , group = TRUE)
 tukey_result
 
@@ -271,142 +278,35 @@ str(tukey_result)
 
 tukey_result
 
-library(tidyverse)
-
 grupos <- tukey_result$groups %>% 
   rownames_to_column("tratamientos") %>% 
-  separate(tratamientos, into = c("variedad", "distanciamiento")
-           , sep = ":")
+  separate(tratamientos, into = c("sistemas", "variedad", "distanciamiento", sep = ":"))
 
 str(grupos)
+
 ```
+
+Grafica de barras
 
 ```{r}
-ggplot(grupos, aes(x = variedad, y = Days_to_germination_number, fill = distanciamiento)) +
-  geom_bar(stat = "identity", position = "dodge", color = "black") +
-  geom_text(aes(label = groups, y = Days_to_germination_number + 0.05), 
-            position = position_dodge(width = 0.9), 
-            vjust = 0) +
-  labs(x = "varieda", y = "Days_to_germination_number", fill = "distanciamiento") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggtitle("Gráfico de barras: Dias de germinación por variedad y distanciamiento")
+ggplot(grupos, aes(x = sistemas, y = Yield_kg_ha, fill = interaction(variedad, distanciamiento))) +
+  geom_bar(stat = "summary", fun = "mean", position = "dodge", color = "black") +  # Usar la media para las barras
+  labs(x = "Sistemas", y = "Rendimiento (kg/ha)", fill = "Variedad y Distanciamiento") +  # Etiquetas
+  theme_minimal() +  # Un tema limpio
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+ ggtitle("Gráfico de barras: Días Rendimiento por sistemas, variedad y distanciamiento")
 ```
 
-```{r}
-modelo <- lm(formula = Days_to_germination_number ~ Blocks + variedad + distanciamiento + sistemas +  variedad*distanciamiento*sistemas
-          , data = Db)
-
-anova(modelo)
-
-library(agricolae)
-
-tukey_result <- HSD.test(modelo
-                         , c("variedad", "distanciamiento")
-                         , group = TRUE)
-tukey_result
-
-plot(tukey_result)
-
-str(tukey_result)
-
-tukey_result
-
-library(tidyverse)
-
-grupos <- tukey_result$groups %>% 
-  rownames_to_column("tratamientos") %>% 
-  separate(tratamientos, into = c("variedad", "distanciamiento")
-           , sep = ":")
-
-str(grupos)
-```
-
-## significancia: comparaciones de medias
-
-```{r}
-modelo <- lme4::lmer(Days_to_germination_number ~ (1|Blocks) + variedad*distanciamiento
-                     , data = Db)
-
-anova(modelo)
-
-cm1 <- emmeans(modelo, ~ variedad | distanciamiento) %>% 
-  cld(Letters = letters, reversed = T)
-
-cm1
-
-cm2 <- emmeans(modelo, ~ distanciamiento | variedad) %>% 
-  cld(Letters = letters, reversed = T)
-cm2
-
-cm3 <- emmeans(modelo, ~ variedad * distanciamiento) %>% 
-  cld(Letters = letters, reversed = T)
-cm3
-```
-
-##Gráficos
-
-```{r}
-dtcm <- as.data.frame(cm2) %>% 
-  rename(sig = ".group")
-
-ggplot(dtcm, aes(x = variedad, y = emmean, fill = variedad)) +
-  geom_bar(stat = "identity", position = "dodge", color = "black") +
-  geom_text(aes(label = sig, y = emmean*1.05),
-            position = position_dodge(width = 0.9),
-            vjust = 0) +
-  labs(x = "Variedad", y = "Altura de planta", fill = "Variedades") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggtitle("Gráfico de barras:  Altura de planta por variedad y distanciamiento")
-```
-
-```{r}
-str(Db)
-dim(Db)
-a <- Db[ ,c(7:22)]
-View(a)
-```
-
-##Correlación
-
-```{r}
-library(psych)
-
-Db %>% 
-  select_if(is.numeric) %>% 
-  dplyr::select(!c("Repetitions")) %>% 
-  pairs.panels(x = . 
-               , hist.col="red"
-               , pch = 21
-               , stars = TRUE
-               , scale = FALSE
-               , lm = TRUE
-               ) 
-```
-
-## PCA: Análisis de componentes principales
-
-```{r}
-library(FactoMineR)
-
-mv <- Db %>% 
-  group_by(variedad, distanciamiento) %>% 
-  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
-  PCA(scale.unit = T, quali.sup = c(1:7), graph = F)
 
 
-p1 <- plot(mv
-     , choix="ind"
-     , habillage=1
-     , label = "ind"
-     )
 
 
-p2 <- plot(mv
-     , choix="var")
 
-list(p1, p2) %>% 
-  plot_grid(plotlist = ., nrow = 1)
-```
+
+
+
+
+
+
+
+
 
