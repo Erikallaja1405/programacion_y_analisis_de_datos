@@ -49,6 +49,30 @@ La unidad de estudio en la investigación se basó en dos sistemas agrovoltaicos
 ![Módulo fotovoltaico y cultivo de frejol](IMAGEN TESIS/imagen 2.jpeg)
 
 ## Métodología
+### Manejo del experimento
+Instalación de la estructura de soporte para los paneles
+![Estructura de soporte de los paneles](IMAGEN TESIS/7.jpeg)
+
+
+Instalación de los paneles fotovoltaicos
+![Sistema fotovoltaico monofacial. B. Bifacial.](IMAGEN TESIS/6.jpeg)
+
+Preparación del suelo para el cultivo
+![Preparación de suelo.](IMAGEN TESIS/5.jpeg)
+
+Selección de las semillas 
+![P. Semillas de frejol Panamito (A) Chaucha (B)](IMAGEN TESIS/4.jpeg)
+
+Prueba de germinación de las semillas 
+![semillas](IMAGEN TESIS/3.jpeg)
+
+Análisis de suelo de las parcelas experimentales
+![Suelo](IMAGEN TESIS/2.jpeg)
+
+Siembra de las semillas de frejol en sistemas agrovoltaicos
+![Suelo](IMAGEN TESIS/1.jpeg)
+
+
 
 ### Diseño experimental
 
@@ -109,13 +133,15 @@ modelo <- aov(formula = Days_to_germination_number ~ Blocks + sistemas + varieda
 anova(modelo)
 
 ```
+Este análisis de varianza (ANOVA) evalúa cómo los factores sistemas , variedad y distanciamiento afectan el número de días necesarios para la germinación. En general, los factores sistemas , variedad y distanciamiento no tienen un efecto significativo por sí solos sobre los días de germinación, lo que sugiere que, individualmente, estos factores no modifican sustancialmente el tiempo que tarda en germinar.
+
 Diagnostico de los modelos (Prueba de normalidad)
 
 ```{r}
 plot(modelo)
 ```
 
-Boxplot 
+Gráfico Q-Q (Q-Q Plot de los residuos): Esta gráfica evalúa la normalidad de los residuos. En ella, los residuos estandarizados se comparan con los cuantiles teóricos de una distribución normal. Si los puntos siguen aproximadamente una línea recta, sugiere que los residuos están distribuidos normalmente. En tu gráfico, la mayoría de los puntos se alinean con la línea de referencia, aunque hay algunos puntos en los extremos que se desvían un poco, lo cual es común y generalmente aceptable si no es extremo.
 
 ```{r}
 library(ggplot2)
@@ -140,6 +166,8 @@ library(lme4)
 model <- lme4::lmer(Days_to_germination_number ~ Blocks + sistemas + variedad + distanciamiento + sistemas*variedad*distanciamiento + (1 | Blocks), data = Db)
 anova(model)
 ```
+
+En este análisis de varianza de un modelo lineal mixto para "Days_to_germination_number", se evaluaron los efectos de varios factores (sistemas, variedad y distanciamiento) y sus interacciones en el tiempo de germinación. Los resultados muestran que solo la interacción entre variedad y distanciamiento es significativa, lo que indica que esta combinación de factores influye notablemente en los días hasta la germinación. Los demás factores y sus interacciones (incluyendo sistemas y bloques) no muestran efectos estadísticamente significativos, sugiriendo que no tienen un impacto relevante en el tiempo de germinación.
 
 Eliminación de los valores fuera de serie (outliers) con Boxplot
 
@@ -188,14 +216,22 @@ str(grupos)
 
 ```
 
+En este conjunto de datos, se muestran los resultados de las comparaciones de medias para el número de días hasta la germinación (Days_to_germination_number) en función de varios factores experimentales: sistemas (tipos de sistemas utilizados), variedad (tipo de variedad) y distanciamiento (distancia de siembra). Cada observación representa una combinación de estos factores. La columna groups indica las letras asignadas a cada combinación de tratamiento en función de las pruebas de comparaciones de medias, en las cuales las combinaciones con la misma letra (en este caso "a") no presentan diferencias significativas entre sí en el tiempo de germinación. Esto sugiere que, bajo estas combinaciones específicas de factores, no hay una variación considerable en los días hasta la germinación.
+
 Grafica de barras
+
 
 ```{r}
 ggplot(grupos, aes(x = sistemas, y = Days_to_germination_number, fill = interaction(variedad, distanciamiento))) +
-  geom_bar(stat = "summary", fun = "mean", position = "dodge", color = "black") +  # Usar la media para las barras
-  labs(x = "Sistemas", y = "Días hasta la Germinación", fill = "Variedad y Distanciamiento") +  # Etiquetas
-  theme_minimal() +  # Un tema limpio
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+ ggtitle("Gráfico de barras: Días hasta la germinación por sistemas, variedad y distanciamiento")
+  geom_bar(stat = "summary", fun = "mean", position = "dodge", color = "black") + 
+  geom_text(aes(label = groups), 
+            position = position_dodge(width = 0.9), 
+            vjust = -0.3, 
+            size = 3) + 
+  labs(x = "Sistemas", y = "Días hasta la Germinación", fill = "Variedad y Distanciamiento") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  ggtitle("Gráfico de barras: Días hasta la germinación por sistemas, variedad y distanciamiento")
 ```
 
 ## Rendimiento (Kg/ha)
@@ -209,6 +245,11 @@ modelo <- aov(formula = Yield_kg_ha ~ Blocks + sistemas + variedad + distanciami
 anova(modelo)
 
 ```
+
+Este análisis de varianza evalúa el efecto de varios factores y sus interacciones en el rendimiento por hectárea (Yield_kg_ha). Los factores analizados incluyen sistemas (tipos de sistema de cultivo), variedad (tipo de variedad de planta) y distanciamiento (espaciado entre plantas), junto con sus interacciones. La columna Df indica los grados de libertad, Sum Sq y Mean Sq representan la suma y el promedio de cuadrados, respectivamente, y F value es el valor F que mide la relación entre la variabilidad explicada por el modelo y la variabilidad residual. La Pr(>F) muestra el valor p asociado, que indica la significancia estadística.
+
+En este caso, solo el factor sistemas es estadísticamente significativo (valor p < 0.001), lo que sugiere que los diferentes sistemas de cultivo tienen un efecto significativo en el rendimiento. Ninguno de los otros factores o interacciones muestra un efecto significativo en el rendimiento, ya que sus valores p son mayores a 0.05, lo que implica que variedad, distanciamiento, y las interacciones entre estos factores no contribuyen significativamente a las variaciones en el rendimiento.
+
 Diagnostico de los modelos (Prueba de normalidad)
 
 ```{r}
@@ -290,18 +331,91 @@ Grafica de barras
 
 ```{r}
 ggplot(grupos, aes(x = sistemas, y = Yield_kg_ha, fill = interaction(variedad, distanciamiento))) +
-  geom_bar(stat = "summary", fun = "mean", position = "dodge", color = "black") +  # Usar la media para las barras
-  labs(x = "Sistemas", y = "Rendimiento (kg/ha)", fill = "Variedad y Distanciamiento") +  # Etiquetas
-  theme_minimal() +  # Un tema limpio
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))+ ggtitle("Gráfico de barras: Días Rendimiento por sistemas, variedad y distanciamiento")
+  geom_bar(stat = "summary", fun = "mean", position = "dodge", color = "black") + 
+  geom_text(aes(label = groups), 
+            position = position_dodge(width = 0.9), 
+            vjust = -0.3, 
+            size = 3) + 
+  labs(x = "Sistemas", y = "Rendimiento (kg/ha)", fill = "Variedad y Distanciamiento") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  ggtitle("Gráfico de barras: Rendimiento por sistemas, variedad y distanciamiento")
+```
+
+##Análisis multivariado
+
+```{r}
+str(Db)
+```
+
+### Correlación 
+
+```{r}
+library(psych)
+
+Db %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(!c("Repetitions")) %>% 
+  pairs.panels(x = . 
+               , hist.col="purple"
+               , pch = 21
+               , stars = TRUE
+               , scale = FALSE
+               , lm = TRUE
+               ) 
+```
+
+```{r}
+
+Db %>%
+  dplyr::select(c("Days_to_germination_number", "Yield_kg_ha")) %>%
+  pairs.panels(
+    x = .,
+    hist.col = "purple",
+    pch = 21,
+    stars = TRUE,
+    scale = FALSE,
+    lm = TRUE
+  )
+```
+
+### PCA: Análisis de componentes principales 
+
+```{r}
+library(FactoMineR)
+
+mv <- Db %>% 
+  group_by(sistemas,variedad, distanciamiento) %>% 
+  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
+  PCA(scale.unit = T, quali.sup = c(1:7), graph = F)
+
+
+p1 <- plot(mv
+     , choix="ind"
+     , habillage=1
+     , label = "ind"
+     )
+
+
+p2 <- plot(mv
+     , choix="var")
+
+list(p1, p2) %>% 
+  plot_grid(plotlist = ., nrow = 1)
 ```
 
 
+# DISCUSIÓN
 
+En cuanto a días a la emergencia, no existen diferencias estadísticas significativas para los tratamientos. Esto nos indica que no hay efecto en días a la emergencia, con respecto a los tratamientos distribuidos en los sistemas agrovoltaicos monofacial, bifacial y el control. Esto se aduce a que la mayoría de las plantas correspondientes a la investigación, germinaron en un rango de 7 a 10 días, por lo cual no se registraron diferencias estadísticas.
 
+Los resultados más destacados correspondientes al rendimiento, muestran que la variedad chaucha, sistema bifacial con distanciamiento de siembra 25, logró el mayor rendimiento en grano alcanzando 706.9 kg/ha. Por su parte, la variedad panamito con distanciamiento de siembra 25, correspondiente al sistema bifacial, también obtuvo un rendimiento notable con 618.9 kg/ha, ligeramente inferior a la variedad chaucha. Estos resultados indican que tanto la variedad chaucha y panamito obtuvieron un rendimiento notable en sistema bifacial con distanciamiento de siembra 25 cm entre planta y planta. 
 
+# CONCLUSIONES
 
+La productividad del cultivo de frejol bajo sistemas agrovoltaicos (bifacial y monofacial) en comparación con un sistema de siembra convencional fue mayor debido a que los sistemas agrovoltaicos propician el crecimiento de la planta (altura), por lo que se presentan mayor cantidad de flores y, por ende, mayor número vainas. 
 
+Los sistemas agrovoltaicos propician condiciones para el cultivo de frejol ya que, la variedad chaucha presentó una productividad por hectárea de 706.9 kg/ha, por ende, tuvo mayores características morfológicas en altura de planta, mayor número de flores, hojas trifoliadas, mayor número de vainas, longitud de vainas, peso de la vainas peso de los granos y rendimiento, en comparación con la variedad panamito la cual presentó una productividad de 618.9 kg/ha mientras que en el sistema convencional se registró 387 kg/ha. 
 
 
 
