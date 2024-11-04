@@ -295,18 +295,3 @@ ggplot(grupos, aes(x = sistemas, y = Yield_kg_ha, fill = interaction(variedad, d
   theme_minimal() +  # Un tema limpio
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+ ggtitle("Gráfico de barras: Días Rendimiento por sistemas, variedad y distanciamiento")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
