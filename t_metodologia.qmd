@@ -1,0 +1,308 @@
+---
+title: "Metodos"
+author: "GRUPO3"
+format: 
+ html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    output-file: index
+---
+
+```{r}
+library(readxl)
+EII <- read_excel("C:/Users/Erika Llaja Zuta/Downloads/DATOS EN FORMATO NÚMERO.xlsx", 
+    sheet = "EII", col_types = c("text", 
+        "text", "text", "text", "text", "numeric", 
+        "numeric", "numeric"))
+View(EII)
+str(EII)
+
+```
+
+# EVALUACIÓN INICIAL (a 15 dias)
+## Modelo lineal de altura de planta
+ANOVA para altura de planta
+```{r}
+modelo <- aov(formula = alt_plant ~ bloque + variedad + sustrato + variedad*sustrato
+              , data = EII)
+
+anova(modelo)
+
+```
+
+Boxplot
+
+```{r}
+library(ggplot2)
+ggplot(EII, aes(x = sustrato, y = alt_plant, fill = variedad)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2, colour = "black") +
+  labs(
+    title = "Boxplot con interacción de niveles de sustrato y variedad",
+    x = "Interacción Sustrato y Variedad",
+    y = "Altura de Planta"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, face = "bold")
+  ) +
+  scale_fill_manual(values = c("#FF9999", "#99CCFF", "#66CC99", "#FFD700"))
+```
+
+## Modelo lineal mixto de altura de planta
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(alt_plant ~ bloque + variedad + sustrato + variedad*sustrato + (1|bloque), data = EII)
+
+anova(model)
+
+```
+
+Comparaciones de medias
+
+```{r}
+modelo <- lm(formula = alt_plant ~ bloque + variedad + sustrato + variedad*sustrato
+              , data = EII)
+
+anova(modelo)
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("sustrato", "variedad")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamiento") %>% 
+  separate(tratamiento, into = c("sustrato", "variedad")
+           , sep = ":")
+
+str(grupos)
+```
+
+Gráfico de barras
+```{r}
+ggplot(grupos, aes(x = sustrato, y = alt_plant, fill = variedad)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = alt_plant + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
+  labs(x = "sustrato", y = "altura de planta", fill = "variedad") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: Altura de planta por sustrato y variedad")
+```
+
+Eliminación de valores fuera de seria 
+```{r}
+library(inti)
+mod <- remove_outliers(data = EII, formula = alt_plant ~ bloque + variedad + sustrato + variedad*sustrato + (1|bloque), plot_diag = T)
+mod
+```
+
+## Modelo lineal para Diametro de planta
+ANOVA para diametro de planta
+```{r}
+modelo <- aov(formula = diam_plant ~ bloque + variedad + sustrato + variedad*sustrato
+              , data = EII)
+
+anova(modelo)
+
+```
+
+Boxplot
+
+```{r}
+ggplot(EII, aes(x = sustrato, y = diam_plant, fill = variedad)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2, colour = "black") +
+  labs(
+    title = "Boxplot con interacción de niveles de sustrato y variedad",
+    x = "Interacción Sustrato y Variedad",
+    y = "Diametro de planta"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, face = "bold")
+  ) +
+  scale_fill_manual(values = c("#FF9999", "#99CCFF", "#66CC99", "#FFD700"))
+```
+
+### Modelo lineal mixto de diametro de planta
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(diam_plant ~ bloque + variedad + sustrato + variedad*sustrato + (1|bloque), data = EII)
+
+anova(model)
+
+```
+
+Comparaciones de medias
+
+```{r}
+modelo <- lm(formula = diam_plant ~ bloque + variedad + sustrato + variedad*sustrato
+              , data = EII)
+
+anova(modelo)
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("sustrato", "variedad")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamiento") %>% 
+  separate(tratamiento, into = c("sustrato", "variedad")
+           , sep = ":")
+
+str(grupos)
+```
+
+
+Gráfico de barras
+```{r}
+ggplot(grupos, aes(x = sustrato, y = diam_plant, fill = variedad)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = diam_plant + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
+  labs(x = "sustrato", y = "diametro de planta", fill = "variedad") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: Diametro de planta por sustrato y variedad")
+
+```
+
+Eliminación de valores fuera de seria 
+
+```{r}
+mod <- remove_outliers(data = EII, formula = diam_plant ~ bloque + variedad + sustrato + variedad*sustrato + (1|bloque), plot_diag = T)
+mod
+```
+
+## Modelo lineal de número de hojas
+ANOVA para número de hojas
+```{r}
+modelo <- aov(formula = n_hojas ~ bloque + variedad + sustrato + variedad*sustrato
+              , data = EII)
+
+anova(modelo)
+
+```
+
+Boxplot
+
+```{r}
+ggplot(EII, aes(x = sustrato, y = n_hojas, fill = variedad)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2, colour = "black") +
+  labs(
+    title = "Boxplot con interacción de niveles de sustrato y variedad",
+    x = "Interacción Sustrato y Variedad",
+    y = "Número de hojas"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, face = "bold")
+  ) +
+  scale_fill_manual(values = c("#FF9999", "#99CCFF", "#66CC99", "#FFD700"))
+```
+
+## Modelo lineal mixto de número de hojas
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(n_hojas ~ bloque + variedad + sustrato + variedad*sustrato + (1|bloque), data = EII)
+
+anova(model)
+
+```
+
+Comparaciones de medias
+
+```{r}
+modelo <- lm(formula = n_hojas ~ bloque + variedad + sustrato + variedad*sustrato
+              , data = EII)
+
+anova(modelo)
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("sustrato", "variedad")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamiento") %>% 
+  separate(tratamiento, into = c("sustrato", "variedad")
+           , sep = ":")
+
+str(grupos)
+```
+
+Gráfico de barras
+```{r}
+ggplot(grupos, aes(x = sustrato, y = n_hojas, fill = variedad)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = n_hojas + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
+  labs(x = "sustrato", y = "número de hojas", fill = "variedad") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: Número de hojas por sustrato y variedad")
+```
+
+Eliminación de valores fuera de seria 
+```{r}
+mod <- remove_outliers(data = EII, formula = n_hojas ~ bloque + variedad + sustrato + variedad*sustrato + (1|bloque), plot_diag = T)
+mod
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
