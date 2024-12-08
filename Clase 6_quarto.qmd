@@ -2,7 +2,7 @@
 title: "como usar quarto"
 author: "Erika Llaja Zuta"
 format:
-  html:
+ html:
     toc: true
     toc-location: left
     number-sections: true
