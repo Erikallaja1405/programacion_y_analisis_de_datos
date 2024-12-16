@@ -1,0 +1,230 @@
+---
+title: "ANOTACIÓN DE IMÁGENES"
+authors: "Barboza Saldaña Lili, Huanambal Galvez Jose, Llaja Zuta Erika, Mendoza Bernilla Alejandro"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    output-file: index
+    css: styles.css
+---
+- Curso: Programación y Análisis de Datos
+- Ciclo: VIII
+
+# INTRODUCCIÓN
+
+La anotación de imágenes radica en su capacidad para convertir datos visuales en información medible que permite un análisis eficiente de grandes cantidades de datos. En la agronomía, esta herramienta es importante para determinar rasgos fenotípicos importantes, como el tamaño, la forma y la salud de las hojas, mejorando así las decisiones agrícolas informadas (OpenCV Team., 2021). Además, el uso de técnicas avanzadas de etiquetado puede integrar tecnologías como la inteligencia artificial y el aprendizaje automático para promover la innovación sostenible en la industria (Hearne, 2022). 
+
+Las anotaciones de imágenes son particularmente útiles en proyectos que tienen como objetivo optimizar los fenotipos de cultivos mediante la identificación automática de patrones en imágenes de hojas de suelo agrícola. El proyecto se centra en el uso de herramientas y técnicas computacionales avanzadas como Anaconda, Python, Label Studio, RStudio e ImageJ para facilitar el etiquetado preciso de imágenes. Estas plataformas no solo brindan gestión y análisis de datos intuitivos, sino que también mejoran la capacidad de identificar patrones y tendencias que impactan positivamente la producción agrícola  (R Core Team, 2021).
+
+# OBJETIVOS
+
+## Objetivo general
+Desarrollar un sistema basado en IA para identificar y clasificación de hojas según el área foliar y el modelo de una moneda para mejorar el manejo agrícola y la identificación de este cultivo.
+
+## Objetivos específicos
+
+- Explorar y documentar el uso de herramientas tecnológicas como Anaconda, Python, Label Studio, RStudio e ImageJ en las anotaciones de imágenes.
+
+- Diseñar un flujo de trabajo optimizado para el procesamiento y análisis de imágenes en estudios agronómicos.
+
+- Generar un conjunto de datos etiquetados con precisión, que sirva como base para investigaciones futuras en fenotipado de hojas.
+
+- Evaluar la eficiencia de las herramientas utilizadas y su impacto en la mejora de procesos agrícolas.
+
+# MARCO TEÓRICO
+
+Herramientas dijitales
+
+## Anaconda
+
+![](WhatsApp Image 2024-12-15 at 19.17.59.jpeg)
+
+Es una distribución de código abierto para lenguajes como Python y R, para análisis de datos y aprendizaje automático. Su función principal es gestionar paquetes y entornos virtuales, asegurando la interoperabilidad entre herramientas necesarias para proyectos complejos. Al etiquetar imágenes de hojas de Coffea arabica, Anaconda permite instalar bibliotecas como OpenCV y TensorFlow, necesarias para el procesamiento de imágenes y el entrenamiento de modelos de predicción. Además, su capacidad para gestionar grandes cantidades de datos lo convierte en una opción ideal para proyectos de fenotipado digital en agronomía (Anaconda Inc., 2023; McKinney, 2010). 
+
+## Python
+
+![](piton.jpeg)
+
+Es un lenguaje de programación de propósito general ampliamente utilizado en ciencia de datos e inteligencia artificial. Para el etiquetado de imágenes, proporciona bibliotecas como OpenCV, que permite la manipulación y procesamiento de imágenes, y TensorFlow, que facilita la creación de modelos de aprendizaje automático para la clasificación de fenotipos. Por ejemplo, en el caso de las hojas de Coffea arabica, se utilizó Python para detectar automáticamente patrones en la estructura de las hojas, aumentando la precisión y reduciendo el tiempo de análisis manual (OpenCV Team., 2021; Van Rossum & Drake, 2009). Además, la sintaxis clara de Python y los recursos disponibles lo convierten en una herramienta accesible para los investigadores agrícolas. 
+
+## Label Studio
+![](label .jpeg)
+
+
+Herramienta de código abierto para anotar y etiquetar datos. Proporciona una interfaz gráfica intuitiva que facilita la segmentación de imágenes, la clasificación de objetos y la caracterización de regiones de interés. En el contexto del etiquetado de imágenes de hojas de Coffea arabica, Label Studio se podría utilizar para la identificación y clasificación de ciertos patrones como daños causados por plagas, manchas en las hojas o cambios de color esto en el caso de estudios relacionados a la agronomía. Su flexibilidad para integrar modelos de aprendizaje automático permite la mejora continua de la calidad del etiquetado, contribuyendo a la creación de conjuntos de datos confiables (Hearne, 2022; Label Studio Team, 2023).
+
+## RStudio
+![](r studio.jpeg)
+
+RStudio es un entorno integrado para el lenguaje R, ampliamente reconocido por su capacidad para realizar análisis estadísticos complejos y visualizaciones de alto nivel. En el etiquetado de imágenes, RStudio le permite analizar datos de etiquetas, crear gráficos descriptivos y ejecutar modelos predictivos. Por ejemplo, en un estudio sobre hojas de Coffea arabica, los datos etiquetados se pueden procesar en R para analizar las relaciones entre las condiciones ambientales y la salud de las hojas, lo que ayuda a tomar decisiones informadas en el manejo de cultivos, (R Core Team, 2021; Wickham, 2016) siempre y cuando el estudio lo requiera necesario en este caso solo nos ayudará para codificar. Además, su integración con otras herramientas como Python ayuda a garantizar un flujo de trabajo más eficiente.
+
+## ImageJ
+
+![](44.jpeg)
+
+ImageJ es una poderosa herramienta de análisis y procesamiento de imágenes digitales. Diseñado originalmente para aplicaciones biológicas, su capacidad para tomar medidas precisas y detectar patrones visuales lo hace ideal para la planificación agronómica. En el caso de las hojas de Coffea arabica, se utilizó ImageJ para analizar la morfología de las hojas, identificar áreas foliares. Su amplia gama de complementos permite análisis avanzados, como la segmentación de imágenes y la cuantificación de regiones afectadas, lo que la convierte en una herramienta indispensable para el etiquetado de imágenes en estudios fenotípicos  (Schindelin et al., 2012; Schneider et al., 2012).
+
+# MATERIALES Y MÉTODOS
+
+## Procesos de instalación y configuración de anaconda y Label Studio y anotación de hojas.
+
+![](111111111.jpeg)
+![](22.jpeg)
+![](333.jpeg)
+
+## YOLO para segmentación
+El modelo YOLO (You Only Look Once) desempeña un papel fundamental en la segmentación y detección de imágenes dentro del sector agrícola, en particular en la mejora de la gestión y la sostenibilidad de los cultivos. Su capacidad para realizar la detección de objetos en tiempo real permite un seguimiento eficiente de los cultivos, las plagas y las enfermedades, lo que en última instancia conduce a la mejora de las prácticas agrícolas. 
+
+![](55555.jpeg)
+![](666 .jpeg)
+![](777.jpeg)
+
+## Creación de un modelo de aprendizaje automático y aplicaciones en la agricultura 
+
+### TensorFlow y PyTorch
+![](8888.jpeg)
+
+TensorFlow
+
+- Desarrollado por: Google.
+
+- Función principal: Framework para construir, entrenar y desplegar modelos de aprendizaje automático.
+
+- Características clave:
+
+    Ofrece herramientas para construir modelos desde cero o usar            modelos preentrenados.
+
+    Compatible con múltiples dispositivos (CPU, GPU, TPU).
+      
+    Facilita la creación de gráficos de datos para representar              operaciones matemáticas.
+
+PyTorch
+
+- Desarrollado por: Meta.
+
+- Función principal: Framework de aprendizaje automático diseñado para investigación y aplicaciones prácticas.
+
+- Características clave:
+
+     Más flexible que TensorFlow, lo que permite depurar y modificar         modelos fácilmente.
+
+     Adopta un enfoque dinámico para construir gráficos computacionales.
+
+     Popular en investigación por su facilidad de uso.
+
+## ¿Cómo se pueden aplicar estos frameworks en agricultura?
+
+- Recolección de datos: Fotografías de hojas en diferentes estados (sanas, enfermas, con deficiencias).
+    
+- Preprocesamiento de imágenes: Ajustar dimensiones, normalizar colores y eliminar ruido.
+    
+- Construcción del modelo: Utilizar TensorFlow o PyTorch para diseñar la arquitectura del modelo (por ejemplo, ResNet para clasificación o UNet para segmentación).
+    
+- Entrenamiento: Alimentar el modelo con imágenes etiquetadas para que aprenda a reconocer patrones.
+    
+- Evaluación: Probar el modelo con imágenes nuevas para medir su precisión y sensibilidad.
+    
+- Implementación: Desplegar el modelo en dispositivos móviles, drones o sistemas agrícolas para diagnóstico en tiempo real.
+
+## ImagenJ
+ImagenJ es un software de código abierto diseñado para el análisis de imágenes, ampliamente utilizado en estudios científicos. Su flexibilidad permite procesar y analizar imágenes para medir áreas, longitudes, colores y densidades, siendo una herramienta esencial en investigaciones agrícolas, como el análisis foliar para evaluar la salud y el desarrollo de las plantas.
+
+### Proceso desde la instalación hasta el análisis con ImagenJ
+#### Instalación del software ImagenJ
+
+- Visitamos la página oficial de ImageJ (https://imagej.net/ij/download.html) y descargamos el software compatible con nuestro sistema operativo.
+
+![](aaa.jpeg)
+
+
+
+#### Preprocesamiento de imágenes
+
+- Importación: Abrimos las imágenes en el programa ImagenJ.
+
+![](bb.jpeg)
+
+- Ajuste del tamaño y resolución: Verificamos que las imágenes estén en escala real. Establecemos una escala donde se utilizando una regla como referencia incluido en la imagen.
+
+![](cc.jpeg)
+
+- Conversión a color RGB y uso del umbral de color: Selecciona la opción "Image > Type > RGB Color" para trabajar en el espectro de color completo.
+Usa "Adjust > Color Threshold" para segmentar las áreas de interés en función de los colores. Esto permite identificar zonas específicas de la semilla, como rojo u otro color de acuerdo a lo que estemos trabajando.
+
+![](dd .jpeg)
+![](ee.jpeg)
+
+- Ajuste de los parámetros de umbral: Ajusta los deslizadores para los valores de Hue, Saturation, y Brightness hasta resaltar únicamente las áreas relevantes de la hoja.
+
+![](ff.jpeg)
+
+- Aplicar la medición: Luego, vamos a "Analyze > Measure" o presiona Ctrl+M para calcular las métricas seleccionadas como área, perímetro o de acuerdo a lo que estamos realizando. Los resultados aparecerán en una tabla como se puede observar en la imagen.
+
+![](gg.jpeg)
+
+- Interpretación y reporte: En este caso se trabajó con semillas de maíz, como se pudo observar en análisis mostrado, ImageJ facilita el conteo, la germinación, medición de tamaño, área y análisis de la uniformidad, lo que contribuye a evaluar la calidad de semillas, hojas u otras investigaciones que realicemos o comparar tratamientos experimentales. Su versatilidad y facilidad de uso lo convierten en una herramienta fundamental para el análisis cuantitativo de imágenes.
+
+# RESULTADOS
+
+Se logró implementar herramientas tecnológicas avanzadas como Anaconda, Label Studio e ImageJ, para etiquetar imágenes de hojas. Teniendo instalada las herramientas se puso a prueba utilizando hojas de café y una moneda de un sol, con la finalidad de enseñarle al programa a identificar la presencia de una hoja y cualquier otro objeto, para posteriormente crear un diseño que permita realizar actividades que eficientes. El programa ImageJ aunque es más trabajoso debido a no permite realizar un diseño automático, si no que se tiene que analizar imagen por imagen lo cual hace que el programa sea un poco tedioso, se puso a prueba con una imagen de semillas de maíz, y se pudo obtener datos específicos como el área y otros parámetros que son fundamentales para evaluar. Esto indica que las herramientas tecnológicas implementadas son de gran ayuda para realizar diferentes investigaciones en el ámbito agrícola. 
+
+# CONCLUSIÓN
+
+El uso combinado de herramientas como Anaconda, Label Studio, ImageJ y RStudio permite un análisis profundo y versátil, maximizando el impacto de las tecnologías digitales en la agricultura. Estas tecnologías no solo mejoran el manejo de cultivos, sino que también tienen el potencial de ser aplicadas en otras áreas agrícolas, fortaleciendo el desarrollo sostenible del sector.
+
+# REFERENCIAS BIBLIOGRÁFICAS
+
+Anaconda Inc. (2023). Anaconda Documentation. 
+
+Hearne, G. (2022). Label Studio: Open Source Data Labeling. LinkedIn Pulse.
+
+Label Studio Team. (2023). Label Studio Documentation. 
+
+McKinney, W. (2010). Data structures for statistical computing in 
+Python. Proceedings of the 9th Python in Science Conference, 51–56.
+
+OpenCV Team. (2021). Open Source Computer Vision Library.
+
+R Core Team. (2021). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing.
+
+Schindelin, J., Arganda-Carreras, I., Frise, E., Kaynig, V., Longair, M., Pietzsch, T., Preibisch, S., Rueden, C., Saalfeld, S., Schmid, B., Tinevez, J.-Y., White, D. J., Hartenstein, V., Eliceiri, K., Tomancak, P., & Cardona, A. (2012). Fiji: an open-source platform for biological-image analysis. Nature Methods, 9(7), 676–682. https://doi.org/10.1038/nmeth.2019
+
+Schneider, C. A., Rasband, W. S., & Eliceiri, K. W. (2012). NIH Image to ImageJ: 25 years of image analysis. Nature Methods, 9(7), 671–675. https://doi.org/10.1038/nmeth.2089
+
+Van Rossum, G., & Drake, F. L. (2009). Python 3 Reference Manual. Python Software Foundation.
+
+Wickham, H. (2016). ggplot2. Springer International Publishing. https://doi.org/10.1007/978-3-319-24277-4
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,78 @@
+---
+title: "Oca"
+author: "Erika"
+format: html
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this 
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+source('https://inkaverse.com/setup.r')
+
+
+url <- "https://docs.google.com/spreadsheets/d/1bjvG-0rLwl6RNeSDEMbNFNP9VLkIt_E0NhX7R-HGq8k/edit?gid=1670577263#gid=1670577263"
+
+gs <- url %>% 
+  as_sheets_id()
+
+el <- gs %>% 
+  range_read("el")
+
+
+str(el)
+```
+
+
+```{r}
+
+modelo <- aov(n_outbreaks ~ Treatments + PGR + concentration, data = el)
+
+anova(modelo)
+
+plot(modelo)
+
+```
+
+```{r}
+library(ggplot2)
+
+# Gráfico de caja con facetas por PGR
+ggplot(el, aes(x = Treatments, y = n_outbreaks, fill = Treatments)) +
+  geom_boxplot() +
+  facet_wrap(~ PGR) +
+  labs(
+    title = "Distribución de brotes por tratamientos y regulador de crecimiento",
+    x = "Tratamientos",
+    y = "Número de brotes"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+
+
+
+
+
+
+
+

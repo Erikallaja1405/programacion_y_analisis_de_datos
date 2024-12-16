@@ -1,0 +1,323 @@
+---
+title: "El índice de cosecha es un rasgo clave para la selección de genotipos de papa tolerantes a la sequía ( Solanum tuberosum )"
+author: "Geyson Vilca"
+format: html
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    output-file: index
+    
+---
+
+```{r}
+```{r}
+
+R.version.string
+
+cat("Project: ", getwd())
+
+
+
+
+library(sessioninfo)
+
+session_info()
+
+```
+
+# RESUMEN
+# INTRODUCCIÓN
+# MATERIALES Y MÉTODOS
+# RESULTADOS
+Importacion de datos
+
+```{r}
+source('https://inkaverse.com/setup.r')
+
+url <- "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346"
+
+gs <- url %>% 
+  as_sheets_id()
+
+fb <- gs %>% 
+  range_read("fb")
+
+
+str(fb)
+```
+
+## Peso seco de raíz
+### Modelo lineal de peso seco de raíz (g)
+ANOVA para rootdw
+```{r}
+modelo <- aov(formula = rootdw ~  bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modelo)
+```
+
+Diagnostico de los modelos (Prueba de normalidad)
+
+```{r}
+plot(modelo)
+```
+
+Boxplot
+
+```{r}
+ggplot(fb, aes(x = geno, y = rootdw, colour = riego)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
+  labs(title = "Boxplot con interacción de niveles de riego y genotipo",
+       x = "Interacción Riego y Genotipo",
+       y = "Peso seco de raíz")
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
+```
+
+### Modelo lineal mixto de peso seco de raíz
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(rootdw ~ riego + geno + riego*geno + (1|bloque), data = fb)
+
+anova(model)
+
+```
+
+Eliminación de valores fuera de seria de con Boxplot
+
+```{r}
+ol <- boxplot(rootdw ~ riego*geno, fb)
+ol
+```
+
+Eliminación de valores fuera de seria de con paquete inti
+
+```{r}
+library(inti)
+
+model <- remove_outliers(data = fb
+                         , formula = rootdw ~ riego + geno + riego*geno + (1|bloque)
+                         , plot_diag = T
+                         )
+
+model
+```
+
+Comparaciones de medias
+
+```{r}
+modelo <- lm(formula = rootdw ~  bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modelo)
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("geno", "riego")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("geno", "riego")
+           , sep = ":")
+
+str(grupos)
+```
+Boxplot
+```{r}
+ggplot(grupos, aes(x = geno, y = rootdw, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = rootdw + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
+  labs(x = "Genotipo", y = "ROWWTDW", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: Rootdw por genotipo y riego")
+```
+
+## Peso seco del tubérculo
+### Modelo lineal del peso seco por peso seco del tubérculo (g)
+ANOVA de para tubdw
+```{r}
+modelo <- aov(formula = tubdw~  bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modelo)
+```
+
+Diagnostico de los modelos (Prueba de normalidad)
+
+```{r}
+plot(modelo)
+```
+
+Boxplot
+
+```{r}
+ggplot(fb, aes(x = geno, y = tubdw, colour = riego)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
+  labs(title = "Boxplot con interacción de niveles de riego y genotipo",
+       x = "Interacción Riego y Genotipo",
+       y = "Peso seco de tubérculo")
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Inclinar etiquetas del eje X
+```
+
+###Modelo lineal mixto de peso seco de raíz
+
+```{r}
+library(lme4)
+library(lmerTest)
+
+model <- lme4::lmer(tubdw ~ riego + geno + riego*geno + (1|bloque), data = fb)
+
+anova(model)
+
+```
+
+Eliminación de valores fuera de seria de con Boxplot
+
+```{r}
+ol <- boxplot(tubdw ~ riego*geno, fb)
+ol
+```
+
+Eliminación de valores fuera de seria de con paquete inti
+
+```{r}
+library(inti)
+
+model <- remove_outliers(data = fb
+                         , formula = tubdw ~ riego + geno + riego*geno + (1|bloque)
+                         , plot_diag = T
+                         )
+
+model
+```
+
+Comparaciones de medias
+
+```{r}
+modelo <- lm(formula = tubdw ~  bloque + riego + geno + riego*geno
+          , data = fb)
+
+anova(modelo)
+library(agricolae)
+
+tukey_result <- HSD.test(modelo
+                         , c("geno", "riego")
+                         , group = TRUE)
+tukey_result
+
+plot(tukey_result)
+
+str(tukey_result)
+
+tukey_result
+
+library(tidyverse)
+
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("geno", "riego")
+           , sep = ":")
+
+str(grupos)
+```
+Boxplot
+```{r}
+ggplot(grupos, aes(x = geno, y = tubdw, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = tubdw + 0.05), 
+            position = position_dodge(width = 0.9), 
+            vjust = 0) +
+  labs(x = "Genotipo", y = "TUBDW", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Gráfico de barras: Tubdw por genotipo y riego")
+```
+
+## Análisis multivariado
+```{r}
+str(fb)
+
+```
+
+### Correlación
+```{r}
+library(psych)
+
+fb %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(!c("block")) %>% 
+  pairs.panels(x = .
+               , hist.col="red"
+               , pch = 21
+               , stars = TRUE
+               , scale = FALSE
+               , lm = TRUE
+               ) 
+```
+
+Correlación de peso seco de raíz y peso seco de tubérculo 
+
+```{r}
+fb %>%
+  dplyr::select(c("rootdw", "tubdw")) %>%
+  pairs.panels(
+    x = .,
+    hist.col = "red",
+    pch = 21,
+    stars = TRUE,
+    scale = FALSE,
+    lm = TRUE
+  )
+```
+
+### PCA: Análisis de componentes principales
+
+```{r}
+library(FactoMineR)
+
+mv <- fb %>% 
+  group_by(riego, geno) %>% 
+  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
+  PCA(scale.unit = T, quali.sup = c(1:4), graph = F)
+
+
+p1 <- plot(mv
+     , choix="ind"
+     , habillage=1
+     , label = "ind"
+     )
+
+
+p2 <- plot(mv
+     , choix="var")
+
+list(p1, p2) %>% 
+  plot_grid(plotlist = ., nrow = 1)
+```
+
+# DISCUSIONES
+
+# CONCLUSIONES
+
+# REFERENCIAS BIBLI0GRÁFICAS
+
+

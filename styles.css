@@ -1,0 +1,17 @@
+/* Cambia el color de fondo del índice */
+#TOC {
+    background-color: #003366; /* Azul oscuro */
+    color: white; /* Texto en blanco */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Cambia el color de los enlaces dentro del índice */
+#TOC a {
+    color: #FFFFFF; /* Enlaces en blanco */
+    text-decoration: none; /* Sin subrayado */
+}
+
+#TOC a:hover {
+    color: #ADD8E6; /* Azul claro al pasar el cursor */
+}
