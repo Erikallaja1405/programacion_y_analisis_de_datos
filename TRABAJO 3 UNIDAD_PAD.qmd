@@ -17,7 +17,7 @@ format:
 
 La anotación de imágenes radica en su capacidad para convertir datos visuales en información medible que permite un análisis eficiente de grandes cantidades de datos. En la agronomía, esta herramienta es importante para determinar rasgos fenotípicos importantes, como el tamaño, la forma y la salud de las hojas, mejorando así las decisiones agrícolas informadas (OpenCV Team., 2021). Además, el uso de técnicas avanzadas de etiquetado puede integrar tecnologías como la inteligencia artificial y el aprendizaje automático para promover la innovación sostenible en la industria (Hearne, 2022). 
 
-Las anotaciones de imágenes son particularmente útiles en proyectos que tienen como objetivo optimizar los fenotipos de cultivos mediante la identificación automática de patrones en imágenes de hojas de suelo agrícola. El proyecto se centra en el uso de herramientas y técnicas computacionales avanzadas como Anaconda, Python, Label Studio, RStudio e ImageJ para facilitar el etiquetado preciso de imágenes. Estas plataformas no solo brindan gestión y análisis de datos intuitivos, sino que también mejoran la capacidad de identificar patrones y tendencias que impactan positivamente la producción agrícola  (R Core Team, 2021).
+Con el objetivo de desarrollar un sistema eficiente de anotación y análisis de imágenes que combine herramientas tecnológicas avanzadas, como Anaconda, Python, Label Studio, RStudio e ImageJ, para optimizar la identificación y clasificación de hojas, promoviendo la innovación y sostenibilidad en la agricultura.
 
 # OBJETIVOS
 
@@ -195,7 +195,7 @@ Schindelin, J., Arganda-Carreras, I., Frise, E., Kaynig, V., Longair, M., Pietzs
 Schneider, C. A., Rasband, W. S., & Eliceiri, K. W. (2012). NIH Image to ImageJ: 25 years of image analysis. Nature Methods, 9(7), 671–675. https://doi.org/10.1038/nmeth.2089
 
 Van Rossum, G., & Drake, F. L. (2009). Python 3 Reference Manual. Python Software Foundation.
-
+git
 Wickham, H. (2016). ggplot2. Springer International Publishing. https://doi.org/10.1007/978-3-319-24277-4
  
 
